@@ -15,7 +15,8 @@ public class MainActivity extends Activity {
 	TextView textSENSOR_list, textSENSOR_total, textLINEARACCELERATION_reading,
 			textMAXLINEARACCELERATION_reading,
 			textACCELERATION_reading,
-			textMAXACCELERATION_reading;
+			textMAXACCELERATION_reading,
+			textCONVERSIONLINEAR_reading;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,8 @@ public class MainActivity extends Activity {
 		
 		textACCELERATION_reading = (TextView) findViewById(R.id.ACCELERATION_reading);
 		textMAXACCELERATION_reading = (TextView) findViewById(R.id.MAXACCELERATION_reading);
-
+		textCONVERSIONLINEAR_reading = (TextView) findViewById(R.id.CONVERSIONLINEAR_reading);
+		
 		SensorManager mySensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
 		
@@ -121,16 +123,23 @@ public class MainActivity extends Activity {
 				maxx = event.values[0];
 				textMAXACCELERATION_reading.setText("MAX X: " + maxx + " Y:" + maxy
 						+ " Z:" + maxz);
+				textCONVERSIONLINEAR_reading.setText("AcceltoLinear: " + this.accelerometertoLinearAcceleration(event.values[0],event.values[1],event.values[2]));
 			} else if (event.values[1] > maxy) {
 				maxy = event.values[1];
 				textMAXACCELERATION_reading.setText("MAX X: " + maxx + " Y:" + maxy
 						+ " Z:" + maxz);
+				textCONVERSIONLINEAR_reading.setText("AcceltoLinear: " + this.accelerometertoLinearAcceleration(event.values[0],event.values[1],event.values[2]));
 			} else if (event.values[2] > maxz) {
 				maxz = event.values[2];
 				textMAXACCELERATION_reading.setText("MAX X: " + maxx + " Y:" + maxy
 						+ " Z:" + maxz);
+				textCONVERSIONLINEAR_reading.setText("AcceltoLinear: " + this.accelerometertoLinearAcceleration(event.values[0],event.values[1],event.values[2]));
 			}
 
+		}
+		
+		private float accelerometertoLinearAcceleration(float x, float y, float z) {
+			return (float)Math.sqrt((x*x) + (y*y) + (z*z));
 		}
 
 	};
